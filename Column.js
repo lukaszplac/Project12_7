@@ -17,11 +17,16 @@ function Column(id, name) {
 		var columnTitle = $('<h2 class="column-title">' + self.name + '</h2>');
 		var columnCardList = $('<ul class="card-list"></ul>');
 		var columnDelete = $('<button class="btn-delete">x</button>');
+		var columnUpdate = $('<button class="btn-update">u</button>');
 		var columnAddCard = $('<button class="column-add-card">Dodaj kartę</button>');
 		
 		// PODPINANIE ODPOWIEDNICH ZDARZEŃ POD WĘZŁY
 		columnDelete.click(function() {
 			self.deleteColumn();
+		});
+
+		columnUpdate.click(function() {
+			self.updateColumn(prompt('Podaj nowa nazwe dla kolumny'));
 		});
 		
 		columnAddCard.click(function(event) {
@@ -43,6 +48,7 @@ function Column(id, name) {
 			
 			// KONSTRUOWANIE ELEMENTU KOLUMNY
 		column.append(columnTitle)
+			.append(columnUpdate)
 			.append(columnDelete)
 			.append(columnAddCard)
 			.append(columnCardList);
@@ -61,6 +67,20 @@ Column.prototype = {
       	method: 'DELETE',
       	success: function(response){
         self.element.remove();
+      	}
+	  })
+	},
+
+	updateColumn: function(newName) {
+	  var self = this;
+	  $.ajax({
+	  	url: baseUrl + '/column/' + self.id,
+      	method: 'PUT',
+      	data: {
+      		name: newName
+      	},
+      	success: function(response){
+        	location.reload();
       	}
 	  })
 	}
