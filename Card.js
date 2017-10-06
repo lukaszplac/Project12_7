@@ -1,8 +1,9 @@
 // KLASA KANBAN CARD
-function Card(id, name) {
+function Card(id, name, colId) {
 	var self = this;
 
 	this.id = id;
+	this.colId = colId;
 	this.name = name || 'No name given';
 	this.element = createCard();
 
@@ -45,11 +46,12 @@ Card.prototype = {
 		  url: baseUrl + '/card/' + self.id,
 	      method: 'PUT',
 	      data: {
-	      	name: newName
+	      	name: newName,
+					bootcamp_kanban_column_id: self.colId
 	      },
 	      success: function(response){
 					self.name = newName;
-          var newCard = $('<h2 class="card-description">' + self.name + '</h2>')
+          var newCard = $('<p class="card-description">' + self.name + '</p>')
           self.element.find('.card-description').replaceWith(newCard);
 	      }
 		})
