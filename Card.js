@@ -1,7 +1,7 @@
 // KLASA KANBAN CARD
 function Card(id, name) {
 	var self = this;
-	
+
 	this.id = id;
 	this.name = name || 'No name given';
 	this.element = createCard();
@@ -11,11 +11,11 @@ function Card(id, name) {
 		var cardDeleteBtn = $('<button class="btn-delete">x</button>');
 		var cardUpdateBtn = $('<button class="btn-update">u</button>');
 		var cardDescription = $('<p class="card-description"></p>');
-		
+
 		cardDeleteBtn.click(function(){
 			self.removeCard();
 		});
-		
+
 		cardUpdateBtn.click(function(){
 			self.updateCard(prompt('Podaj nowa nazwe dla karty'));
 		})
@@ -48,7 +48,9 @@ Card.prototype = {
 	      	name: newName
 	      },
 	      success: function(response){
-	      	location.reload();
+					self.name = newName;
+          var newCard = $('<h2 class="card-description">' + self.name + '</h2>')
+          self.element.find('.card-description').replaceWith(newCard);
 	      }
 		})
 	}

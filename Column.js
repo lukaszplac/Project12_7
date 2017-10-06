@@ -6,7 +6,7 @@ var myHeaders = {
 
 function Column(id, name) {
 	var self = this;
-	
+
 	this.id = id;
 	this.name = name || 'No name given';
 	this.element = createColumn();
@@ -19,7 +19,7 @@ function Column(id, name) {
 		var columnDelete = $('<button class="btn-delete">x</button>');
 		var columnUpdate = $('<button class="btn-update">u</button>');
 		var columnAddCard = $('<button class="column-add-card">Dodaj kartę</button>');
-		
+
 		// PODPINANIE ODPOWIEDNICH ZDARZEŃ POD WĘZŁY
 		columnDelete.click(function() {
 			self.deleteColumn();
@@ -28,7 +28,7 @@ function Column(id, name) {
 		columnUpdate.click(function() {
 			self.updateColumn(prompt('Podaj nowa nazwe dla kolumny'));
 		});
-		
+
 		columnAddCard.click(function(event) {
 			var cardName = prompt("Enter the name of the card");
 			event.preventDefault();
@@ -45,7 +45,7 @@ function Column(id, name) {
     			}
 			});
 		});
-			
+
 			// KONSTRUOWANIE ELEMENTU KOLUMNY
 		column.append(columnTitle)
 			.append(columnUpdate)
@@ -80,8 +80,10 @@ Column.prototype = {
       		name: newName
       	},
       	success: function(response){
-        	location.reload();
-      	}
-	  })
-	}
-};
+          self.name = newName;
+          var newCol = $('<h2 class="column-title">' + self.name + '</h2>')
+          self.element.find('.column-title').replaceWith(newCol);
+          }
+      	})
+	  }
+	};
